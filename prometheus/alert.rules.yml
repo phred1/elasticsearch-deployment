@@ -1,0 +1,13 @@
+groups:
+  - name: containers
+    rules:
+    - alert: ContainerCpuUsage
+      expr: (sum(rate(container_cpu_usage_seconds_total[3m])) BY (instance, name) * 100) > 50
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Container CPU usage (instance {{ $labels.instance }})"
+        description: "Container CPU usage is above 50%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+      
