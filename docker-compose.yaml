@@ -1,0 +1,141 @@
+version: '2.2'
+services:
+  es01:
+    image: elasticsearch-jprofiler:latest
+    environment:
+      - node.name=es01
+      - node.max_local_storage_nodes=5
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.zen.minimum_master_nodes=1
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300"
+      - "8849"
+    networks:
+      - elastic
+  
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
+    environment:
+      - node.max_local_storage_nodes=5
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data02:/usr/share/elasticsearch/data
+    ports:
+      - "9200"
+      - "9300"
+    networks:
+      - elastic
+      
+  kib01:
+    image: docker.elastic.co/kibana/kibana:7.6.1
+    container_name: kib01
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: http://es01:9200
+    depends_on:
+      - es01
+    networks:
+      - elastic
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml:ro
+    depends_on:
+      - cadvisor
+      - node-exporter
+    networks:
+      - elastic
+
+  cadvisor:
+    restart: always     
+    privileged: true
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    command:
+      - --v=4
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - 8080
+    networks:
+      - elastic
+
+  grafana:
+    image: grafana/grafana:5.4.3
+    container_name: grafana
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana:/etc/grafana/provisioning/
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    networks:
+      - elastic
+
+  # nginx:
+  #   image: nginx:latest
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #   depends_on:
+  #     - es01
+  #   ports:
+  #     - "4000:4000"
+  #   networks:
+  #     - elastic
+
+
+  node-exporter:
+    image: prom/node-exporter:v1.0.0-rc.0
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    expose:
+      - 9100
+    networks:
+      - elastic
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  prometheus-data: {}
+  grafana-data: {}
+
+networks:
+  elastic:
+    driver: bridge
