@@ -20,7 +20,7 @@ services:
     ports:
       - "9200:9200"
       - "9300"
-      - "8849"
+      - "8849:8849"
     networks:
       - elastic
   
@@ -37,8 +37,8 @@ services:
       memlock:
         soft: -1
         hard: -1
-    volumes:
-      - data02:/usr/share/elasticsearch/data
+    # volumes:
+    #   - data02:/usr/share/elasticsearch/data
     ports:
       - "9200"
       - "9300"

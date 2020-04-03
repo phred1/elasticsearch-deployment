@@ -1,0 +1,7 @@
+/kibana_sample_data_ecommerce/_search?pretty,currency,EUR
+/kibana_sample_data_ecommerce/_search?pretty,day_of_week,Monday
+/kibana_sample_data_ecommerce/_search?pretty,user,rabbia
+/kibana_sample_data_ecommerce/_search?pretty,total_quantity,2
+/kibana_sample_data_ecommerce/_search?pretty,category,Men's Clothing
+/kibana_sample_data_ecommerce/_search?pretty,manufacturer,Low Tide Media
+/kibana_sample_data_ecommerce/_search?pretty,email,tariq@foster-family.zzz

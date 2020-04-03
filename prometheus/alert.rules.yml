@@ -2,7 +2,7 @@ groups:
   - name: containers
     rules:
     - alert: ContainerCpuUsage
-      expr: (sum(rate(container_cpu_usage_seconds_total[3m])) BY (instance, name) * 100) > 50
+      expr: (sum(rate(container_cpu_usage_seconds_total{name!=""}[3m])) BY (instance, name)) > 0.5
       for: 5m
       labels:
         severity: warning
