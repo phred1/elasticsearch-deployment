@@ -29,16 +29,16 @@ Le `Dockerfile` déclaré ici ne sert qu'à injecter un agent JProfiler dans un 
 
 Ensuite, pour déployer Elasticsearch, Kibana,  ainsi que la solution de monitoring composée de Prometheus et Grafana, il suffit de lancer la commande suivante à partir du répertoire contenant le fichier docker-compose.yaml :
 
-<pre><code>docker-compose up -d </code></pre>
+<pre><code>docker-compose up -d es01=1</code></pre>
 Cette commande lance le cluster en utilisant le mode "detached" de Docker.
 
 ## Scaling
 
 Grâce au Dashboard Grafana `elasticsearch-ds.json`, il est possible de visualiser les métrics d'utilisation des containers d'Elasticsearch. En cas de surcharge, on peut augmenter le nombre de container d'Elasticsearch à l'aide de la commande:
 
-<pre><code> docker-compose up --scale es02=2 </code></pre>
+<pre><code> docker-compose up -d --scale es02=2 </code></pre>
 
 Cette commande déploie un second container basé sur le service `es02` défini dans le fichier `docker-compose.yaml`
 
 Pour réduire le nombre de noeuds du cluster, simplement utiliser la même commande que précédemment, mais avec un nombre de container plus petit:
-<pre><code> docker-compose up --scale es02=1</code></pre>
+<pre><code> docker-compose up -d --scale es02=1</code></pre>

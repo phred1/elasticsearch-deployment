@@ -653,7 +653,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".*_es02_1\"}[1m]))\n",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".*_es02_1\"}[1m]))/4\n",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "es02_1",
@@ -1449,5 +1449,5 @@
   "timezone": "",
   "title": "elasticsearch-ds",
   "uid": "_9Dz-59Zk",
-  "version": 2
+  "version": 1
 }
