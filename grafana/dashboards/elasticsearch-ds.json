@@ -22,98 +22,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "description": "Traffic in bytes for every Nodes in the Elasticsearch cluster",
-      "fill": 1,
-      "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 22,
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "(sum(rate(container_network_receive_bytes_total{name=~\".*_es0.*\"}[1m])) BY (instance, name))",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Node Traffic",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "description": "CPU usage of all the nodes of the system",
       "fill": 1,
       "gridPos": {
         "h": 12,
-        "w": 24,
+        "w": 12,
         "x": 0,
-        "y": 10
+        "y": 0
       },
       "id": 19,
       "legend": {
@@ -188,54 +103,21 @@
       }
     },
     {
-      "alert": {
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                0.5
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "es01 - CPU alert",
-        "noDataState": "no_data",
-        "notifications": []
-      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "description": "The average amount of CPU usage by the container es01",
+      "description": "Traffic in bytes for every Nodes in the Elasticsearch cluster",
       "fill": 1,
       "gridPos": {
-        "h": 9,
+        "h": 12,
         "w": 12,
-        "x": 0,
-        "y": 22
+        "x": 12,
+        "y": 0
       },
-      "id": 2,
+      "id": 22,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
@@ -258,26 +140,23 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\"tp2_es01_1.*\"}[1m]))/4",
+          "expr": "(sum(rate(container_network_receive_bytes_total{name=~\".*_es0.*\"}[1m])) BY (instance, name))",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "es01_1",
           "refId": "A"
-        }
-      ],
-      "thresholds": [
+        },
         {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 0.5
+          "expr": "(sum(rate(container_network_transmit_bytes_total{name=~\".*_es0.*\"}[1m])) BY (instance, name))",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "B"
         }
       ],
+      "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "es01_1 - CPU USAGE",
+      "title": "All Nodes - NETWORK BYTES",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -323,9 +202,9 @@
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 22
+        "w": 8,
+        "x": 0,
+        "y": 12
       },
       "id": 8,
       "legend": {
@@ -430,7 +309,7 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "name": "es02 - CPU USAGE alert",
+        "name": "es01 - CPU alert",
         "noDataState": "no_data",
         "notifications": []
       },
@@ -438,15 +317,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "description": "The average amount of CPU usage by 1 minute for the es02_1 container",
+      "description": "The average amount of CPU usage by the container es01",
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 31
+        "w": 8,
+        "x": 8,
+        "y": 12
       },
-      "id": 12,
+      "id": 2,
       "legend": {
         "avg": false,
         "current": false,
@@ -470,10 +349,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".*_es02_1\"}[1m]))/4\n",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\"tp2_es01_1.*\"}[1m]))/4",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "es02_1",
+          "legendFormat": "es01_1",
           "refId": "A"
         }
       ],
@@ -489,7 +368,99 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "es02_1- CPU USAGE",
+      "title": "es01_1 - CPU USAGE",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "description": "Network bytes per seconds for  the container es01_1",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "id": 23,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(container_network_receive_bytes_total{name=~\".*_es01_1\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "received",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(container_network_transmit_bytes_total{name=~\".*_es01_1\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "transmit",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "es01_1 - NETWORK BYTES",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -535,9 +506,9 @@
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 31
+        "w": 8,
+        "x": 0,
+        "y": 21
       },
       "id": 15,
       "legend": {
@@ -642,6 +613,310 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
+        "name": "es02 - CPU USAGE alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "description": "The average amount of CPU usage by 1 minute for the es02_1 container",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 21
+      },
+      "id": 12,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".*_es02_1\"}[1m]))\n",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "es02_1",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 0.5
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "es02_1- CPU USAGE",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "description": "Network bytes per seconds for  the container es02_1",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 21
+      },
+      "id": 25,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(container_network_receive_bytes_total{name=~\".*_es02_1\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "received",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(container_network_transmit_bytes_total{name=~\".*_es02_1\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "transmit",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "es02_1 - NETWORK BYTES",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "description": "Memory used by the container es02_2",
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 30
+      },
+      "id": 13,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "container_memory_usage_bytes{name=~\".*_es02_2\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "es02_2",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "es02_2 - MEMORY USAGE",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0.5
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "avg"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
         "name": "es03 - CPU USAGE alert",
         "noDataState": "no_data",
         "notifications": []
@@ -655,9 +930,9 @@
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 40
+        "w": 8,
+        "x": 8,
+        "y": 30
       },
       "id": 14,
       "legend": {
@@ -744,15 +1019,15 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "description": "Memory used by the container es02_2",
+      "description": "Network bytes per seconds for  the container es02_2",
       "fill": 1,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 40
+        "w": 8,
+        "x": 16,
+        "y": 30
       },
-      "id": 13,
+      "id": 24,
       "legend": {
         "avg": false,
         "current": false,
@@ -776,17 +1051,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "container_memory_usage_bytes{name=~\".*_es02_2\"}",
+          "expr": "sum(container_network_receive_bytes_total{name=~\".*_es02_2\"})",
           "format": "time_series",
           "intervalFactor": 1,
+          "legendFormat": "received",
           "refId": "A"
+        },
+        {
+          "expr": "sum(container_network_transmit_bytes_total{name=~\".*_es02_2\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "transmit",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "es02_2 - MEMORY USAGE",
+      "title": "es02_2 - NETWORK BYTES",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -868,7 +1151,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 49
+        "y": 39
       },
       "id": 11,
       "legend": {
@@ -961,7 +1244,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 49
+        "y": 39
       },
       "id": 10,
       "legend": {
@@ -1043,10 +1326,10 @@
       "description": "The average network traffic received, per second, over the last minute (in bytes)",
       "fill": 1,
       "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 58
+        "h": 9,
+        "w": 13,
+        "x": 5,
+        "y": 48
       },
       "id": 6,
       "legend": {
@@ -1077,181 +1360,19 @@
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Host - TRAFFIC",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 70
-      },
-      "id": 17,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=\"tp2_nginx_1\"}[1m]))",
+          "expr": "rate(node_network_transmit_bytes_total[1m])",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "nginx",
-          "refId": "A"
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "nginx - CPU USAGE",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "description": "Memory used by the Nginx load balancer",
-      "fill": 1,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 70
-      },
-      "id": 20,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "container_memory_usage_bytes{name=~\".*_nginx_1\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Nginx- MEMORY USAGE",
+      "title": "Host - NETWORK BYTES",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1328,5 +1449,5 @@
   "timezone": "",
   "title": "elasticsearch-ds",
   "uid": "_9Dz-59Zk",
-  "version": 4
+  "version": 2
 }
