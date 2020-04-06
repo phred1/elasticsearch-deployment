@@ -230,7 +230,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "container_memory_usage_bytes{name=\"tp2_es01_1\"}",
+          "expr": "container_memory_usage_bytes{name=~\".*_es01_1.*\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "es01_1",
@@ -349,7 +349,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\"tp2_es01_1.*\"}[1m]))/4",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{name=~\".*_es01_1.*\"}[1m]))/4",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "es01_1",
